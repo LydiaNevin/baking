@@ -1,0 +1,25 @@
+player movement pseudocode
+
+-decide on a speed (pixels per frame to move).
+
+-a movement consists of moving in one of the eight possible directions, from the center
+of one grid space to another. this takes several frames (10 for straight, 14 for diagonal?)
+
+- we keep track of the movement by counting down the frames, and double check
+  against the actual sprite position.
+
+- when the movement is completed, if nothing has changed then another one shall commence
+in the same direction. (recomputeTarget)
+
+-a movement can be interrupted by a few things:
+    - the grid forcibly stops us because we are running into something illegal.
+        - On the next frame (before me move again), we should set the target as the closest exact grid position, and the frames
+          based on how far away we are. This should work out evenly... if it doesn't then warp?
+    - the player presses a new movement key.
+        - we should change our movement direction intent, but wait until we finish the movement
+          to actually start walking in a diff. direction.
+    - the player releases a movement key.
+       - if we still have some intent to move, then complete the ongoing movement
+         and then move in the new direction next.
+       - if we have no intent to move, do the same as when the grid stops us.
+
