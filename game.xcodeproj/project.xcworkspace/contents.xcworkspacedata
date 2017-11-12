@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:game.xcodeproj">
+      location = "group:/Users/lydia/Documents/GAME/game/game/basicsamplegrid.xml">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

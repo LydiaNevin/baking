@@ -49,6 +49,9 @@ public:
     int getX() const;
     int getY() const;
     
+    int getXdirection() const;
+    int getYdirection() const;
+    
     void nextFrame();
     
     sf::Vector2i getTarget() const;
@@ -57,7 +60,7 @@ public:
     // reasons to recompute target:
     // 1. We moved past it
     // 2. changed direction
-    void recomputeTarget();
+    void recomputeTarget(bool strict = true);
     sf::Vector2i checkTarget();
     
     

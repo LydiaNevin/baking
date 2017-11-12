@@ -24,6 +24,7 @@
 #include "logic.h"
 #include "grid.h"
 #include "gameobject.h"
+#include "tinyxml2.h"
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -86,7 +87,7 @@ void loopMessages(MessageBus* message_bus){
 
 int main(){
 
-    
+
     MessageBus message_bus;
     LogicSystem logic_system(message_bus);
 
@@ -105,13 +106,14 @@ int main(){
     // }
     
 
-    int step_size = 128;
-    // will want to make custom classes to control various aspects, but for now do this
+    //int step_size = 128;
+
     
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(512,512), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
+    sf::RenderWindow window(sf::VideoMode(768,768), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
     window.setVerticalSyncEnabled(true);
     window.setActive(true);
+    window.setKeyRepeatEnabled(false);
     
     // Set the Icon
     sf::Image icon;
@@ -119,50 +121,14 @@ int main(){
         return EXIT_FAILURE;
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    
-    // Load a sprite to display
-    sf::Texture texture;
-    if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
-        return EXIT_FAILURE;
-    }
-    sf::Sprite sprite(texture);
-    
-    // Load a sprite for the player.
 
-    Grid grid(message_bus, 4, 4, 0,0, step_size);
+
+    // create the Grid, which keeps track of where everything is
+    // (and also player movement, for now... )
+    Grid grid(message_bus, "basicsamplegrid.xml");
     message_bus.addRecipient(&grid);
     
     grid.addTexture("crystal.png");
-    
-    //create several sprites for empty grid spaces?
-//
-//    vector<vector<sf::Sprite> > bg_sprites(4);
-//    for(int i = 0; i < 4; i ++){
-//        bg_sprites[i] = vector<sf::Sprite>(4);
-//        for(int j = 0; j < 4; j++){
-//            bg_sprites[i][j] = sf::Sprite(bg_texture);
-//            bg_sprites[i][j].setPosition(i*stepSize, j*stepSize);
-//        }
-//    }
-
-
-    
-    // Create a graphical text to display
-    sf::Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
-        return EXIT_FAILURE;
-    }
-    sf::Text text("Hello SFML", font, 50);
-    text.setFillColor(sf::Color::Black);
-    
-    // Load a music to play
-    sf::Music music;
-    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
-        return EXIT_FAILURE;
-    }
-    
-    // Play the music
-    //music.play();
     
     
     // create threads
@@ -215,8 +181,8 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         vector<vector<vector<GameObject> > >& all_sprites = grid.getAllSprites();
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4; j++){
+        for(int i = 0; i < grid.getHeight(); i++){
+            for(int j = 0; j < grid.getWidth(); j++){
                 for(int k = 0; k < all_sprites[i][j].size(); k++){
                     window.draw(all_sprites[i][j][k].getSprite());
                 }
@@ -238,13 +204,13 @@ int main(){
     // eventually there will be like display threads and stuff for rendering
     // also threads that wait on UI inputs and process those into messages?
     // (like for real not from the terminal)
-    logic_thread.join();
-    grid_thread.join();
-    term_thread.join();
-    message_thread.join();
+//    logic_thread.join();
+//    grid_thread.join();
+//    term_thread.join();
+//    message_thread.join();
     //display_thread.join();
     
-    return(0);
+//    return(0);
 }
 
 

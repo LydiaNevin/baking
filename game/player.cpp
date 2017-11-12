@@ -39,7 +39,6 @@ void Player::moveDirection(int dx, int dy){
 }
 
 void Player::haltX(){
-    cout << "Stopping x" << endl;
     _x_direction = 0;
     if(_y_direction == 0){
         _stop_flag = true;
@@ -47,7 +46,6 @@ void Player::haltX(){
 }
 
 void Player::haltY(){
-    cout << "Stopping y" << endl;
     _y_direction = 0;
     if(_x_direction == 0){
         _stop_flag = true;
@@ -80,6 +78,14 @@ int Player::getYRound() const{
     float y = _sprite.getPosition().y;
     int yBlocks = int(y/_grid_size + 0.5 + edgeBoundary * _y_direction);
     return yBlocks;
+}
+
+int Player::getXdirection() const {
+    return _x_direction;
+}
+
+int Player::getYdirection() const {
+    return _y_direction;
 }
 
 sf::Vector2i Player::getTarget() const{
@@ -122,14 +128,16 @@ void Player::nextFrame(){
 
 }
 
-void Player::recomputeTarget(){
+void Player::recomputeTarget(bool strict){
    
     //verify that we are on a grid space, or very close
     sf::Vector2f pos = _sprite.getPosition();
     int x = getX();
     int y = getY();
-    assert(abs(pos.x/_grid_size - x) < 0.02);
-    assert(abs(pos.y/_grid_size - y) < 0.02);
+    if(strict){
+        assert(abs(pos.x/_grid_size - x) < 0.02);
+        assert(abs(pos.y/_grid_size - y) < 0.02);
+    }
     
     // square up exactly with the grid space
     sf::Vector2f current_pos = sf::Vector2f(x*_grid_size, y*_grid_size);

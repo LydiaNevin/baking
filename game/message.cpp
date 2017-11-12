@@ -39,7 +39,7 @@ bool MessageBus::sendAll(){
 }
 
 const int MessageBus::howMany(){
-  return _messages.size();
+  return int(_messages.size());
 }
 
 bool MessageBus::sendToAll(){

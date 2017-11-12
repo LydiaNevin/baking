@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<BasicSampleGrid>
+    <Dimensions width="6" height="6" stepSize="128" />
+    <ForbiddenAreas>
+        <ForbiddenTile x="9" y="9" />
+        <ForbiddenRect leftbound="8" rightbound="9" upbound="2" lowbound="7" />
+    </ForbiddenAreas>
+    <Textures>
+        <Texture width="1" height="1" id="0" descpription="Player">smiley.png</Texture>
+        <Texture width="1" height="1" id="1" descpription="Empty">empty.png</Texture>
+        <Texture width="1" height="1" id="2" descpription="Crystal">crystal.png</Texture>
+         <Texture width="1" height="1" id="3" descpription="Win">win.png</Texture>
+    </Textures>
+    <BackgroundTile id="1" />
+    <Contents>
+        <GridItem id="2" x="1" y="0" walkable="false" />
+        <GridItem id="2" x="2" y="0" walkable="false" />
+        <GridItem id="2" x="3" y="0" walkable="false" />
+        <GridItem id="2" x="4" y="0" walkable="false" />
+        <GridItem id="2" x="5" y="0" walkable="false" />
+        <GridItem id="2" x="2" y="2" walkable="false" />
+        <GridItem id="2" x="2" y="3" walkable="false" />
+        <GridItem id="3" x="5" y="5" walkable="true" />
+        
+        
+    </Contents>
+</BasicSampleGrid>
